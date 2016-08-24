@@ -3,7 +3,6 @@
 // 	alert('connect to server');
 // });
 
-
 angular.module('technodeApp').factory('socket',function($rootScope){
 	var socket=io.connect('/');
 	return {
