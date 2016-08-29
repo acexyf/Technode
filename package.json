@@ -17,8 +17,12 @@
   },
   "homepage": "https://github.com/acexyf/Technode#readme",
   "dependencies": {
+    "async": "^2.0.1",
+    "cheerio": "^0.22.0",
+    "debug": "^2.2.0",
     "express": "^4.14.0",
+    "mysql": "^2.11.1",
     "path": "^0.12.7",
-    "socket.io": "^1.4.8"
+    "request": "^2.74.0"
   }
 }
