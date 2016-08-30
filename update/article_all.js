@@ -1,8 +1,10 @@
 var request=require('request');
 var cheerio=require('cheerio');
 var debug=require('debug');
+var async=require('async');
 
 function readArticleList(url,callback){
+	debug('读取博文:%s',url);
 	request(url,function(err,res){
 		if(err)
 			return callback(err);
@@ -26,6 +28,53 @@ function readArticleList(url,callback){
 		callback(null,articleList);
 	});
 }
+
+
+
+function readArticleDetail(url,callback){
+	debug('读取博文内容:%s',url);
+	request(url,function(err,res){
+		if(err)
+			return callback(err);
+		var $=cheerio.load(res.body.toString());
+		var tags=[];
+		$('.blog_tag h3 a').each(function(){
+			var tag=$(this).text().trim();
+			if(tag){
+				tags.push(tag);
+			}
+		});
+		var content=$('.articalContent').html().trim();
+		callback(null,{tags:tags,content:content});
+	});
+}
+
+
+readArticleList('http://blog.sina.com.cn/s/articlelist_1776757314_0_1.html',function(err,articleList){
+	if(err)
+		console.log(err);
+	async.eachSeries(articleList,function(article,next){
+		readArticleDetail(article.url,function(err,detail){
+			if(err)
+				return console.log(err);
+			console.log(detail);
+			next();
+		});
+	},function(err){
+		if(err)
+			return console.log(err);
+		console.log('done');
+	});
+});
+
+
+
+
+
+
+
+
+
 
 
 
