@@ -7,6 +7,8 @@ var config = require('./config');
 
 var app = express();
 
+
+
 // 配置 express
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
